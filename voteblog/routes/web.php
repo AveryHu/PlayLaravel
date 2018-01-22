@@ -15,6 +15,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/about', function () {
-    return view('about');
-});
+Route::get('/about/{subpage?}', 'AboutController@index');
+Route::post('/about', 'AboutController@create');
