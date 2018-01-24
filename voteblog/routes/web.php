@@ -15,5 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Page after login
+//Route::group(['before'=>'auth'], function(){
+
+//});
+
 Route::get('/about/{subpage?}', 'AboutController@index');
 Route::post('/about', 'AboutController@create');
+
+Route::get('/login', 'MemberController@index');
+Route::post('/login', 'MemberController@login');
+Route::get('/logout', 'MemberController@logout');
