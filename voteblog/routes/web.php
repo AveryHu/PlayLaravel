@@ -20,9 +20,11 @@ Route::get('/', function () {
 
 //});
 
-Route::get('/about/{subpage?}', 'AboutController@index');
-Route::post('/about', 'AboutController@create');
+Route::get('/about/{subpage?}', 'AboutController@get_about');
+Route::post('/about', 'AboutController@post_about');
 
-Route::get('/login', 'MemberController@index');
-Route::post('/login', 'MemberController@login');
-Route::get('/logout', 'MemberController@logout');
+Route::get('/login', 'MemberController@get_login');
+Route::post('/login', 'MemberController@post_login');
+Route::get('/logout', 'MemberController@get_logout');
+Route::get('/register', 'MemberController@get_register');
+Route::post('/register', 'MemberController@post_register');
