@@ -11,3 +11,4 @@ npm-debug.log
 yarn-error.log
 .env
 /public/upload_img/*
+!/public/upload_img/.gitkeep 
