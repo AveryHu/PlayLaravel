@@ -28,3 +28,5 @@ Route::post('/login', 'MemberController@post_login');
 Route::get('/logout', 'MemberController@get_logout');
 Route::get('/register', 'MemberController@get_register');
 Route::post('/register', 'MemberController@post_register');
+
+Route::resource('/votes', 'VoteController');

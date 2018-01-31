@@ -6,7 +6,7 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="/votes">
                 <img src="{!! asset('/icon/icon-pack/svg/house.svg') !!}" title="Home Page"  width="40" height="40"/>
             </a>
         </li>
