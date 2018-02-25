@@ -177,6 +177,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /* This is for social login*/
+        Laravel\Socialite\SocialiteServiceProvider::class,
     ],
 
     /*
@@ -225,7 +227,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        /* This is for social login */
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ],
 
 ];

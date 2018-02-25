@@ -30,3 +30,7 @@ Route::get('/register', 'MemberController@get_register');
 Route::post('/register', 'MemberController@post_register');
 
 Route::resource('/votes', 'VoteController');
+
+/* This is for social login */
+Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
+Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');

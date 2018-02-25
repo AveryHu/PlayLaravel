@@ -16,10 +16,19 @@ class VoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return view('index');
+        $votes = '';
+        if($request->input('cateid') == null)
+            $votes = Vote::all();
+        else
+            $votes = Vote::all()->where('cateid', $request->input('cateid'));
+        return view('index', [
+            'current' => $request->input('cateid'), 
+            'votes' => $votes, 
+            'cates' => Category::all()
+            ]);
     }
 
     /**
@@ -106,7 +115,9 @@ class VoteController extends Controller
     public function show(Vote $vote)
     {
         //
-        return 'Hello show';
+        $vote = Vote::all()->where('id', $vote->id)->first();
+        $choices = Votechoice::all()->where('voteid', $vote->id);
+        return view('forms/vote', ['vote' => $vote, 'choices' => $choices]);;
     }
 
     /**
@@ -130,6 +141,9 @@ class VoteController extends Controller
     public function update(Request $request, Vote $vote)
     {
         //
+        $choice = Votechoice::all()->where('voteid', $vote->id)
+        ->where('id', $request->select)->first()->increment('ticket');
+        return response()->json(['success'=>'done']);
     }
 
     /**

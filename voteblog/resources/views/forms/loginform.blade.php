@@ -11,7 +11,7 @@
                     Sign In With
                 </span>
 
-                <a href="#" class="btn-face m-b-20">
+                <a href="/login/facebook" class="btn-face m-b-20">
                     <i class="fa fa-facebook-official"></i>
                     Facebook
                 </a>

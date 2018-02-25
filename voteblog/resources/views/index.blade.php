@@ -15,7 +15,53 @@
         <!-- Custom styles for this template -->
         <link href="{!! asset('/theme/article_template/css/4-col-portfolio.css')!!}" rel="stylesheet">
         <style type="text/css">
-        @font-face{font-family:rbicon;src:url(chrome-extension://dipiagiiohfljcicegpgffpbnjmgjcnf/fonts/rbicon.woff2) format("woff2");font-weight:400;font-style:normal}
+            .txtGradient {
+                z-index: 2;
+                position: relative;
+                height: 80px; 
+                margin-top: -80px;
+                overflow: hidden;
+                background: -moz-linear-gradient(
+                    bottom, 
+                    rgb(255, 255, 255) 15%,
+                
+                    rgba(255, 255, 255, 0) 100%
+                ); 
+                background: -webkit-gradient(
+                    linear,
+                    bottom,
+                    top,
+                    color-stop(15%, rgb(255, 255, 255)),
+                    color-stop(100%, rgba(255, 255, 255, 0))
+                );
+                background: -webkit-linear-gradient(
+                    bottom,
+                    rgb(255,255,255) 15%,
+                    rgba(255, 255, 255, 0) 100%
+                );
+                background: -o-linear-gradient(
+                    bottom,
+                    rgb(255,255,255) 15%,
+                    rgba(255, 255, 255, 0) 100%
+                );
+                background: -ms-linear-gradient(
+                    bottom,
+                    rgb(255,255,255) 15%,
+                    rgba(255, 255, 255, 0) 100%
+                );
+                
+                background: linear-gradient(
+                    bottom,
+                    rgb(255, 255, 255) 15%,
+                    rgba(255, 255, 255, 0) 100%
+                );
+            }
+            @font-face{
+                font-family:rbicon;
+                src:url(chrome-extension://dipiagiiohfljcicegpgffpbnjmgjcnf/fonts/rbicon.woff2) format("woff2");
+                font-weight:400;
+                font-style:normal
+                }
         </style>
     </head>
 
@@ -26,23 +72,34 @@
                 <a class="navbar-brand" href="#">觀看投票結果</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
-                </button>
+                </button>                
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
+                        @if($current == null)
                         <li class="nav-item active">
-                        <a class="nav-link" href="#">全部文章
-                            <span class="sr-only">(current)</span>
-                        </a>
-                        </li>
+                        @else
                         <li class="nav-item">
-                        <a class="nav-link" href="#">新聞時事</a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link" href="#">旅遊美食</a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link" href="#">休閒娛樂</a>
-                        </li>
+                        @endif
+                            <a class="nav-link" href="/votes">全部文章
+                                @if($current == null)
+                                    <span class="sr-only">(current)</span>
+                                @endif
+                            </a>
+                        </li>   
+                        @foreach( $cates as $cate)
+                            @if($current == $cate->id)
+                            <li class="nav-item active">
+                            @else
+                            <li class="nav-item">
+                            @endif
+                                <a class="nav-link" href="{{ route('votes.index', ['cateid' => $cate->id]) }}">
+                                    {{$cate->name}}
+                                    @if($current == $cate->id)
+                                        <span class="sr-only">(current)</span>
+                                    @endif
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -55,20 +112,44 @@
             <h1 class="my-4">Page Heading
                 <small>Secondary Text</small>
             </h1>
-
-            <div class="row">
-                <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
-                    <div class="card h-100">
-                        <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                        <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">Project One</a>
-                        </h4>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur eum quasi sapiente nesciunt? Voluptatibus sit, repellat sequi itaque deserunt, dolores in, nesciunt, illum tempora ex quae? Nihil, dolorem!</p>
+            
+            <?php $i = 0; ?>
+            @foreach( $votes as $key => $vote)
+                @if(($i%3)==0)
+                    <div class="row">
+                @endif
+                    <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
+                        <div class="card h-100">
+                            @if($vote->image == '')
+                                <a href="#">
+                                    <img class="card-img-top" src="http://placehold.it/700x400" alt="">
+                                </a>
+                            @else
+                                <a href="#">
+                                    <img class="card-img-top" src="{{asset('/upload_img/'.$vote->image)}}" alt="">
+                                </a>
+                            @endif
+                            <div class="card-body">
+                                <div style="background-color:coral; text-align:center; color:white;" >
+                                    <small>{{$cates->where('id', $vote->cateid)->first()->name}}</small>
+                                </div>
+                                <h4 class="card-title">
+                                    <a href="{{ route('votes.show', $vote) }}">{{$vote->title}}</a>                                
+                                </h4>
+                                <p class="card-text" style="height:100px; overflow:hidden;">{{$vote->content}}</p>
+                                <div class="txtGradient" id="txtGradient"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                @if(($i%3)==2)
+                    </div>
+                @elseif( ($i+1)==count($votes) )
+                    </div>
+                @endif
+                <?php $i++; ?>
+            @endforeach
+            
+            
             <!-- /.row -->
 
             <!-- Pagination -->
