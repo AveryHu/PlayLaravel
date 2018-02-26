@@ -122,8 +122,9 @@
 <div class="limiter">
     <div class="container-login100" style="background-image: url({!! asset('/upload_img/'.$vote->image) !!});">
         <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33" style="box-shadow:4px 4px 12px 4px rgba(20%,20%,40%,0.5);">
-            <h1 style="">{{$vote->title}}</h1>
-            <div class="fb-like" data-href="{{Request::url()}}" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="false"></div>
+            <h1 style="">{{$vote->title}} ( 截止時間 : {{$vote->end}})</h1>
+            <div class="fb-like" data-href="{{Request::url()}}" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+            <input class="button" type="button" style="background-color:red" value="{{$cate->name}}"></input>
             <p id="fullcontent" style="height:20px; overflow:hidden;">{{$vote->content}}</p>
             <div style="text-align:right;">                
                 <input class="button" type="button" id="show" value="顯示全文"></input>

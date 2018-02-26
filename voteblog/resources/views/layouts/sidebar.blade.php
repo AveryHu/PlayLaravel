@@ -11,7 +11,7 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="/results">
                 <img src="{!! asset('/icon/icon-pack/svg/pie-chart.svg') !!}" title="Vote result"  width="40" height="40"/>
             </a>
         </li>

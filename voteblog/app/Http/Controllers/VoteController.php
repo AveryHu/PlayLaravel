@@ -21,9 +21,9 @@ class VoteController extends Controller
         //
         $votes = '';
         if($request->input('cateid') == null)
-            $votes = Vote::all();
+            $votes = Vote::all()->where('end', '>', Carbon::now());
         else
-            $votes = Vote::all()->where('cateid', $request->input('cateid'));
+            $votes = Vote::all()->where('cateid', $request->input('cateid'))->where('end', '>', Carbon::now());
         return view('index', [
             'current' => $request->input('cateid'), 
             'votes' => $votes, 
@@ -117,7 +117,8 @@ class VoteController extends Controller
         //
         $vote = Vote::all()->where('id', $vote->id)->first();
         $choices = Votechoice::all()->where('voteid', $vote->id);
-        return view('forms/vote', ['vote' => $vote, 'choices' => $choices]);;
+        $cate = Category::all()->where('id', $vote->cateid)->first();
+        return view('forms/vote', ['vote' => $vote, 'choices' => $choices, 'cate' =>$cate]);;
     }
 
     /**
