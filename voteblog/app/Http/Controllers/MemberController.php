@@ -11,52 +11,64 @@ use App\User;
 
 class MemberController extends Controller
 {
-    //
-    public function get_login()
+    protected $user;
+
+    public function __construct(User $user)
     {
-        return view('login')->with('register', False);
+        $this->user = $user;
     }
 
-    public function post_login(Request $requests){
-        $attempt = Auth::attempt([
-            'name' => $requests['username'],
-            'password' => $requests['password']
-        ]);
-        if ($attempt) {
-            return Redirect::intended('about');
-        }
-        return Redirect::to('login')
-                ->withErrors(['fail'=>'Username or password is wrong!']);
-    }
-
-    public function get_logout(){
-        Auth::logout();
-        return Redirect::to('login');
-    }
-
-    public function get_register(){
-        return view('login')->with('register', True);
-    }
-
-    public function post_register(Request $requests){
-        $validator = Validator::make($requests->all(),[
-            'username' => 'unique:users,name',
-            'email' => 'unique:users,email',
-        ]);
-        if ($validator->fails())
-        {
-            return Redirect::back()->withErrors($validator)->withInput(Input::except('password'));
-        }
-        $this->create($requests);
-        return Redirect::intended('about');
-    }
-
-    public function create(Request $request)
+    public function getLogin()
     {
-        $user = new User;
-        $user->name = $request->username;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->save();
+        $register = false;
+
+        return view('login', compact('register'));
+    }
+
+    public function postLogin(Request $request)
+    {
+        // 可以改成 name 就可以直接使用了
+        $params = $request->only(['name', 'password']);
+
+        if (auth()->attempt($params)) {
+            return redirect()->intended('about');
+        }
+
+        return redirect()->to('login')->withErrors([
+            'fail' => 'Username or password is wrong!'
+        ]);
+    }
+
+    public function getLogout()
+    {
+        auth()->logout();
+
+        return redirect()->to('login');
+    }
+
+    public function getRegister()
+    {
+        $register = false;
+
+        return view('login', compact('register'));
+    }
+
+    public function postRegister(Request $request)
+    {
+        $params = $request->only(['username', 'email', 'password']);
+
+        $validator = Validator::make(
+            $params, [
+                'username' => 'unique:users,name',
+                'email' => 'unique:users,email'
+            ]
+        );
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->except(['password']));
+        }
+        $params['password'] = Bcrypt($params['password']);
+        $this->user->create($params);
+        return redirect()->intended('about');
     }
 }

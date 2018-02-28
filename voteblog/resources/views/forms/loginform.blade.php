@@ -27,7 +27,7 @@
                     </span>
                 </div>
                 <div class="wrap-input100 validate-input" data-validate="Username is required">
-                    <input class="input100" type="text" name="username">
+                    <input class="input100" type="text" name="name">
                     <span class="focus-input100"></span>
                 </div>
 
@@ -50,7 +50,7 @@
                         Sign In
                     </button>
                 </div>
-                
+
                 @if ($errors->has('fail'))
                     <div class="w-full text-center p-t-55">
                         <span class="txt2" style="color:red;">
