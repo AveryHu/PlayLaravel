@@ -115,11 +115,11 @@
             
             <?php $i = 0; ?>
             @foreach( $votes as $key => $vote)
-                @if(($i%3)==0)
+                @if(($i%4)==0)
                     <div class="row">
                 @endif
                     <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
-                        <div class="card h-100">
+                        <div class="card h-80">
                             @if($vote->image == '')
                                 <a href="#">
                                     <img class="card-img-top" src="http://placehold.it/700x400" alt="">
@@ -141,7 +141,7 @@
                             </div>
                         </div>
                     </div>
-                @if(($i%3)==2)
+                @if(($i%4)==3)
                     </div>
                 @elseif( ($i+1)==count($votes) )
                     </div>
@@ -153,30 +153,28 @@
             <!-- /.row -->
 
             <!-- Pagination -->
-            <ul class="pagination justify-content-center">
-                <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">«</span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">2</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">3</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">»</span>
-                        <span class="sr-only">Next</span>
+            <!-- I don't like this-->
+            <!--
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">«</span>
+                        <span class="sr-only">Previous</span>
                     </a>
-                </li>
-            </ul>
-
+                    </li>
+                    @for ($i=0;$i<count($votes)/4;$i++)
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('votes.index', $i+1) }}">{{$i+1}}</a>
+                        </li>
+                    @endfor
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">»</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            -->
         </div>
         <!-- /.container -->
 

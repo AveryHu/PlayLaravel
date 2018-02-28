@@ -119,7 +119,7 @@
                     <div class="row">
                 @endif
                     <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
-                        <div class="card h-100">
+                        <div class="card h-80">
                             @if($vote->image == '')
                                 <a href="#">
                                     <img class="card-img-top" src="http://placehold.it/700x400" alt="">
@@ -153,6 +153,8 @@
             <!-- /.row -->
 
             <!-- Pagination -->
+            <!-- I don't like this-->
+            <!--
             <ul class="pagination justify-content-center">
                 <li class="page-item">
                 <a class="page-link" href="#" aria-label="Previous">
@@ -160,15 +162,11 @@
                     <span class="sr-only">Previous</span>
                 </a>
                 </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">2</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">3</a>
-                </li>
+                @for ($i=0;$i<count($votes)/4;$i++)
+                    <li class="page-item">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                @endfor
                 <li class="page-item">
                     <a class="page-link" href="#" aria-label="Next">
                         <span aria-hidden="true">»</span>
@@ -176,7 +174,7 @@
                     </a>
                 </li>
             </ul>
-
+            -->
         </div>
         <!-- /.container -->
 
