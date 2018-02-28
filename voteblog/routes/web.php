@@ -23,11 +23,11 @@ Route::get('/', function () {
 Route::get('/about/{subpage?}', 'AboutController@get_about');
 Route::post('/about', 'AboutController@post_about');
 
-Route::get('/login', 'MemberController@get_login');
-Route::post('/login', 'MemberController@post_login');
-Route::get('/logout', 'MemberController@get_logout');
-Route::get('/register', 'MemberController@get_register');
-Route::post('/register', 'MemberController@post_register');
+Route::get('/login', 'MemberController@getLogin');
+Route::post('/login', 'MemberController@postLogin');
+Route::get('/logout', 'MemberController@getLogout');
+Route::get('/register', 'MemberController@getRegister');
+Route::post('/register', 'MemberController@postRegister');
 
 Route::resource('/votes', 'VoteController');
 Route::get('/results', 'VoteResultController@index')->name('results');
