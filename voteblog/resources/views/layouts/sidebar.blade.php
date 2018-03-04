@@ -1,3 +1,6 @@
+<style>
+    a:focus {outline:none;} 
+</style>
 <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
         <li class="sidebar-brand">
@@ -16,9 +19,15 @@
             </a>
         </li>
         <li>
-            <a href="#">
-                <img src="{!! asset('/icon/icon-pack/svg/edit.svg') !!}" title="Testing"  width="40" height="40"/>
-            </a>
+            @if(Auth::check())
+                <a href="/votes/create">
+                    <img src="{!! asset('/icon/icon-pack/svg/edit.svg') !!}" title="Vote create"  width="40" height="40"/>
+                </a>
+            @else
+                <a data-toggle="modal" href="#myModal">
+                    <img src="{!! asset('/icon/icon-pack/svg/edit.svg') !!}" title="Vote create"  width="40" height="40"/>
+                </a>
+            @endif 
         </li>        
         <li>            
             @if(Auth::check())
@@ -37,4 +46,23 @@
             </a>
         </li>
     </ul>
+</div>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Log in</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                Oops ! This function only for the member.. If you want to create a new vote,
+                you have to log in ! Come and join us for using this exciting function !
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn">Close</a>
+                <a href="/login" class="btn btn-primary">Go to login</a>
+            </div>
+        </div>
+    </div>
 </div>

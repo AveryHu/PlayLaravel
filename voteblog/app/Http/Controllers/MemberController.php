@@ -48,7 +48,7 @@ class MemberController extends Controller
 
     public function getRegister()
     {
-        $register = false;
+        $register = true;
 
         return view('login', compact('register'));
     }
