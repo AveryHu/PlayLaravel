@@ -4,16 +4,6 @@
 
 @section('content')
 
-@if(Auth::check())
-    <form action='/about' method="POST">
-        {{csrf_field()}}
-        <input type="text" placeholder="Route" name="route">
-        <input type="text" placeholder="Title" name="title">
-        <input type="text" placeholder="Content" name="content">
-        <input type="submit">
-    </form>
-@endif
-
 <div class="container">
     <div class="row">
         @include('layouts.about_sidebar')

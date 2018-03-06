@@ -18,7 +18,7 @@ class AboutController extends Controller
 
     public function post_about(Request $request)
     {
-        return create($request);
+        return $this->create($request);
     }
 
     public function create(Request $request)
