@@ -136,13 +136,7 @@
             </div>
             <form name="vote_form" id="vote_form">           
                 <section>
-                    <input type="hidden" name="_method" value="PUT">
-                    <div class="alert alert-danger print-error-msg" style="display:none">
-                    <ul></ul>
-                    </div>
-                    <div class="alert alert-success print-success-msg" style="display:none">
-                    <ul></ul>
-                    </div>
+                    <input type="hidden" name="_method" value="PUT">                    
                     @foreach( $choices as $key => $choice)  
                         <div>
                             <input type="radio" id="control_0{{$key*2}}" name="select" value="{{$choice->id}}" class="choice" checked>
@@ -163,9 +157,19 @@
                         </div>
                     @endforeach
                 </section>
-                @if($vote->end>Carbon::now())
-                    <input type="button" name="submit" id="submit" value="Submit" style="width:100%;height:50px"></input>
+                @if($vote->end>Carbon::now())                    
+                    @if(Auth::check())
+                        <input type="button" name="submit" id="submit" value="Submit" style="width:100%;height:50px"></input>
+                    @else
+                        <input type="button" data-toggle="modal" href="#myModal" value="Submit" style="width:100%;height:50px"></input>
+                    @endif 
                 @endif
+                <div class="alert alert-danger print-error-msg" style="display:none">
+                    <ul></ul>
+                </div>
+                <div class="alert alert-success print-success-msg" style="display:none">
+                    <ul></ul>
+                </div>
             </form>
             <div class="fb-comments" data-href="{{Request::url()}}" data-numposts="5"></div>
         </div>
@@ -173,6 +177,25 @@
 </div>
 
 <div id="fb-root"></div>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                Only our member can vote. If you want to vote you have to log in ! 
+                Come and join us for using this exciting function !
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn">Close</a>
+                <a href="/login" class="btn btn-primary">Go to login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
@@ -201,7 +224,7 @@
                 $("#fullcontent").css('height','20px');
             }
         }); 
-        $('#submit').click(function(){ 
+        $('#submit').click(function(){
             $.ajax({  
                 url:postURL,  
                 method:"POST",
@@ -216,7 +239,7 @@
                         $("#vote_form")[0].reset();
                         $(".print-success-msg").css('display','block');
                         $(".print-error-msg").css('display','none');
-                        $(".print-success-msg").find("ul").append('<li>Record Inserted Successfully.</li>');
+                        $(".print-success-msg").find("ul").append('<li>Vote Successfully. Refresh to see the newest result!!</li>');
                     }
                 }
             });  

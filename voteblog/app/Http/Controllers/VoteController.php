@@ -8,6 +8,7 @@ use App\Votechoice;
 use Illuminate\Http\Request;
 use Validator;
 use Carbon\Carbon;
+use App\Votesrecord;
 
 class VoteController extends Controller
 {
@@ -146,8 +147,20 @@ class VoteController extends Controller
     public function update(Request $request, Vote $vote)
     {
         //
+        $check = Votesrecord::all()->where('voteid', $vote->id)
+        ->where('userid', auth()->user()->id)->first();
+        if($check)
+        {
+            $warning=array("No chance"=>"You already voted this.");
+            return response()->json(['error'=>$warning]);
+        }
+        Votesrecord::create([
+            'userid' => auth()->user()->id,
+            'voteid' => $vote->id,
+            'votenumber' => $request->select
+        ]);
         $choice = Votechoice::all()->where('voteid', $vote->id)
-        ->where('id', $request->select)->first()->increment('ticket');
+        ->where('id', $request->select)->first()->increment('ticket');        
         return response()->json(['success'=>'done']);
     }
 
